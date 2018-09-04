@@ -1219,8 +1219,10 @@ int av_read_frame(AVFormatContext *s, AVPacket *pkt)
             }
 
             if(av_dup_packet(add_to_pktbuf(&s->packet_buffer, pkt,
-                                           &s->packet_buffer_end)) < 0)
+                                           &s->packet_buffer_end)) < 0) {
+            av_log(s, AV_LOG_ERROR, "couldnt alloc readframe.\n");
                 return AVERROR(ENOMEM);
+            }
         }else{
             assert(!s->packet_buffer);
             return av_read_frame_internal(s, pkt);
@@ -2262,6 +2264,7 @@ int av_find_stream_info(AVFormatContext *ic)
         pkt= add_to_pktbuf(&ic->packet_buffer, &pkt1, &ic->packet_buffer_end);
         if(av_dup_packet(pkt) < 0) {
             av_free(duration_error);
+            av_log(ic, AV_LOG_ERROR, "couldnt alloc find stream info.\n");
             return AVERROR(ENOMEM);
         }
 
@@ -2595,8 +2598,10 @@ int av_set_parameters(AVFormatContext *s, AVFormatParameters *ap)
 
     if (s->oformat->priv_data_size > 0) {
         s->priv_data = av_mallocz(s->oformat->priv_data_size);
-        if (!s->priv_data)
+        if (!s->priv_data) {
+            av_log(s, AV_LOG_ERROR, "couldnt alloc 2601 %d.\n", s->oformat->priv_data_size);
             return AVERROR(ENOMEM);
+        }
     } else
         s->priv_data = NULL;
 
@@ -2666,8 +2671,10 @@ int av_write_header(AVFormatContext *s)
 
     if (!s->priv_data && s->oformat->priv_data_size > 0) {
         s->priv_data = av_mallocz(s->oformat->priv_data_size);
-        if (!s->priv_data)
+        if (!s->priv_data) {
+            av_log(s, AV_LOG_ERROR, "couldnt alloc 2672 %d.\n", s->oformat->priv_data_size);
             return AVERROR(ENOMEM);
+        }
     }
 
 #if LIBAVFORMAT_VERSION_MAJOR < 53
@@ -2679,8 +2686,10 @@ int av_write_header(AVFormatContext *s)
         AVMetadata *m;
         AVMetadataTag *t;
 
-        if (!(m = av_mallocz(sizeof(AVMetadata))))
+        if (!(m = av_mallocz(sizeof(AVMetadata)))) {
+            av_log(s, AV_LOG_ERROR, "couldnt alloc avmetadata %d.\n", sizeof(AVMetadata));
             return AVERROR(ENOMEM);
+        }
         av_metadata_set2(&m, "encoder", LIBAVFORMAT_IDENT, 0);
         metadata_conv(&m, s->oformat->metadata_conv, NULL);
         if ((t = av_metadata_get(m, "", NULL, AV_METADATA_IGNORE_SUFFIX)))

@@ -6710,7 +6710,11 @@ int init_nvram(void)
 			nvram_set_int("led_wps_gpio", 0|GPIO_ACTIVE_LOW);
 		}
 #endif  // RT4GAC68U
+#ifdef RTCONFIG_USBRESET
 		nvram_set_int("pwr_usb_gpio", 9|GPIO_ACTIVE_LOW);
+#else
+		nvram_set_int("pwr_usb_gpio", 9);
+#endif
 		nvram_set_int("btn_wps_gpio", 7|GPIO_ACTIVE_LOW);
 		nvram_set_int("btn_rst_gpio", 11|GPIO_ACTIVE_LOW);
 		if (!is_ac66u_v2_series()) {
@@ -6723,7 +6727,6 @@ int init_nvram(void)
 			nvram_set_int("led_pwr_gpio", 0|GPIO_ACTIVE_LOW);
 			nvram_set_int("led_wan_gpio", 5);
 		}
-
 #ifdef RTCONFIG_XHCIMODE
 		nvram_set("xhci_ports", "1-1");
 #ifdef RT4GAC68U
@@ -6736,8 +6739,8 @@ int init_nvram(void)
 			nvram_set("ohci_ports", "3-1 3-2.2 3-2.1");
 		}
 #else
-		nvram_set("ehci_ports", "2-1 2-2");
-		nvram_set("ohci_ports", "3-1 3-2");
+		nvram_set("ehci_ports", "2-1");
+		nvram_set("ohci_ports", "3-1");
 #endif
 #else // RTCONFIG_XHCIMODE
 		if (nvram_get_int("usb_usb3") == 1) {
@@ -6753,12 +6756,12 @@ int init_nvram(void)
 				nvram_set("ohci_ports", "3-1 3-2.2 3-2.1");
 			}
 #else
-			nvram_set("ehci_ports", "2-1 2-2");
-			nvram_set("ohci_ports", "3-1 3-2");
+			nvram_set("ehci_ports", "2-1");
+			nvram_set("ohci_ports", "3-1");
 #endif
 #else
-			nvram_set("ehci_ports", "2-1 2-2");
-			nvram_set("ohci_ports", "3-1 3-2");
+			nvram_set("ehci_ports", "2-1");
+			nvram_set("ohci_ports", "3-1");
 #endif
 		}
 		else{
@@ -6772,8 +6775,8 @@ int init_nvram(void)
 			nvram_set("ohci_ports", "2-1 2-2");
 #endif
 #else
-			nvram_set("ehci_ports", "1-1 1-2");
-			nvram_set("ohci_ports", "2-1 2-2");
+			nvram_set("ehci_ports", "1-1");
+			nvram_set("ohci_ports", "2-1");
 #endif
 		}
 #endif // RTCONFIG_XHCIMODE
@@ -6790,7 +6793,7 @@ int init_nvram(void)
 		add_rc_support("usbX1");
 #else
 		if (hw_usb_cap())
-		add_rc_support("usbX2");
+		add_rc_support("usbX1");
 #endif
 		add_rc_support("switchctrl"); // broadcom: for jumbo frame only
 		add_rc_support("manual_stb");

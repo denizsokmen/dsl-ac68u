@@ -177,7 +177,7 @@
 {\
     p = av_malloc(size);\
     if (p == NULL && (size) != 0) {\
-        av_log(ctx, AV_LOG_ERROR, "Cannot allocate memory.\n");\
+        av_log(ctx, AV_LOG_ERROR, "Cannot allocate memory. %d\n", size);\
         goto label;\
     }\
 }
@@ -186,7 +186,7 @@
 {\
     p = av_mallocz(size);\
     if (p == NULL && (size) != 0) {\
-        av_log(ctx, AV_LOG_ERROR, "Cannot allocate memory.\n");\
+        av_log(ctx, AV_LOG_ERROR, "Cannot allocate memory. %d\n", size);\
         goto label;\
     }\
 }

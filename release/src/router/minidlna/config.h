@@ -4,8 +4,6 @@
 /* Define if building universal (internal helper macro) */
 /* #undef AC_APPLE_UNIVERSAL_BUILD */
 
-#include "osver.h"
-
 /* DB path */
 #define DEFAULT_DB_PATH "/tmp/minidlna"
 
@@ -17,9 +15,7 @@
 /* #undef ENABLE_NLS */
 
 /* Define to 1 if you have the <arpa/inet.h> header file. */
-#ifndef HAVE_ARPA_INET_H
 #define HAVE_ARPA_INET_H 1
-#endif
 
 /* Define to 1 if you have the <asm/unistd.h> header file. */
 #define HAVE_ASM_UNISTD_H 1
@@ -31,13 +27,13 @@
 /* #undef HAVE_AVAHI_COMMON_THREAD_WATCH_H */
 
 /* Define to 1 if you have the <avcodec.h> header file. */
-/* #undef HAVE_AVCODEC_H */
+#define HAVE_AVCODEC_H 1
 
 /* Define to 1 if you have the <avformat.h> header file. */
-/* #undef HAVE_AVFORMAT_H */
+#define HAVE_AVFORMAT_H 1
 
 /* Define to 1 if you have the <avutil.h> header file. */
-/* #undef HAVE_AVUTIL_H */
+#define HAVE_AVUTIL_H 1
 
 /* Define to 1 if you have the MacOS X function CFLocaleCopyCurrent in the
    CoreFoundation framework. */
@@ -48,21 +44,17 @@
 /* #undef HAVE_CFPREFERENCESCOPYAPPVALUE */
 
 /* use clock_gettime */
-#ifdef MS_IPK
-#define HAVE_CLOCK_GETTIME 1
-#else
 /* #undef HAVE_CLOCK_GETTIME */
-#endif
 
 /* Whether the __NR_clock_gettime syscall is defined */
 #define HAVE_CLOCK_GETTIME_SYSCALL 1
 
 /* Whether darwin sendfile() API is available */
-/* #undef HAVE_DARWIN_SENDFILE_API */
+#define HAVE_DARWIN_SENDFILE_API 1
 
 /* Define if the GNU dcgettext() function is already present or preinstalled.
    */
-#define HAVE_DCGETTEXT 1
+/* #undef HAVE_DCGETTEXT */
 
 /* Define to 1 if you have the <dirent.h> header file, and it defines `DIR'.
    */
@@ -111,22 +103,16 @@
 #define HAVE_GETHOSTNAME 1
 
 /* Define to 1 if you have the `getifaddrs' function. */
-#ifndef MS_IPK
-#if defined RPAC68U
 /* #undef HAVE_GETIFADDRS */
-#else
-#define HAVE_GETIFADDRS 1
-#endif
-#endif
 
 /* Define if the GNU gettext() function is already present or preinstalled. */
-#define HAVE_GETTEXT 1
+/* #undef HAVE_GETTEXT */
 
 /* Define to 1 if you have the `gettimeofday' function. */
 #define HAVE_GETTIMEOFDAY 1
 
 /* Define if you have the iconv() function and it works. */
-/* #undef HAVE_ICONV 1 */
+#define HAVE_ICONV 1
 
 /* Define to 1 if you have the <id3tag.h> header file. */
 #define HAVE_ID3TAG_H 1
@@ -138,9 +124,7 @@
 #define HAVE_INOTIFY 1
 
 /* Define to 1 if you have the `inotify_init' function. */
-#ifndef MS_IPK
 #define HAVE_INOTIFY_INIT 1
-#endif
 
 /* Define to 1 if you have the <inttypes.h> header file. */
 #define HAVE_INTTYPES_H 1
@@ -179,7 +163,7 @@
 #define HAVE_LIBEXIF_EXIF_LOADER_H 1
 
 /* Define to 1 if you have the <libintl.h> header file. */
-#define HAVE_LIBINTL_H 1
+/* #undef HAVE_LIBINTL_H */
 
 /* Define to 1 if you have the `pthread' library (-lpthread). */
 #define HAVE_LIBPTHREAD 1
@@ -251,13 +235,13 @@
 #define HAVE_STDBOOL_H 1
 
 /* Define to 1 if you have the <stddef.h> header file. */
-/* #undef HAVE_STDDEF_H */
+#define HAVE_STDDEF_H 1
 
 /* Define to 1 if you have the <stdint.h> header file. */
 #define HAVE_STDINT_H 1
 
 /* Define to 1 if you have the <stdlib.h> header file. */
-/* #undef HAVE_STDLIB_H */
+#define HAVE_STDLIB_H 1
 
 /* Define to 1 if you have the `strcasecmp' function. */
 #define HAVE_STRCASECMP 1
@@ -322,9 +306,7 @@
 #define HAVE_SYS_FILE_H 1
 
 /* Define to 1 if you have the <sys/inotify.h> header file. */
-#ifndef MS_IPK
 #define HAVE_SYS_INOTIFY_H 1
-#endif
 
 /* Define to 1 if you have the <sys/ioctl.h> header file. */
 #define HAVE_SYS_IOCTL_H 1
@@ -360,7 +342,7 @@
 /* Define to 1 if you have the <vfork.h> header file. */
 /* #undef HAVE_VFORK_H */
 
-/* lacking vorbisfile */
+/* Have vorbisfile */
 #define HAVE_VORBISFILE 1
 
 /* Define to 1 if you have the <vorbis/codec.h> header file. */
@@ -386,19 +368,19 @@
 
 /* Define to 1 if `lstat' dereferences a symlink specified with a trailing
    slash. */
-#define LSTAT_FOLLOWS_SLASHED_SYMLINK 1
+/* #undef LSTAT_FOLLOWS_SLASHED_SYMLINK */
 
 /* Define to 1 if you want to enable generic NETGEAR device support */
 /* #undef NETGEAR */
 
-/* Define to 1 if your C compiler doesn't accept -c and -o together. */
-/* #undef NO_MINUS_C_MINUS_O */
-
 /* OS Name */
-#define OS_NAME "asuswrt"
+#define OS_NAME "Asuswrt"
 
 /* OS URL */
-#define OS_URL "http://www.asus.com/"
+#define OS_URL "https://asuswrt.lostrealm.ca/"
+
+/* OS Version */
+#define OS_VERSION "382.xx"
 
 /* Name of package */
 #define PACKAGE "minidlna"
@@ -410,7 +392,7 @@
 #define PACKAGE_NAME "MiniDLNA"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "MiniDLNA 1.1.4"
+#define PACKAGE_STRING "MiniDLNA 1.1.3"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "minidlna"
@@ -419,16 +401,28 @@
 #define PACKAGE_URL ""
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "1.2.1"
-
-/* Define to 5 if you want to enable NETGEAR ReadyNAS PnP-X support */
-/* #undef PNPX */
+#define PACKAGE_VERSION "1.1.3"
 
 /* Define to 1 if you want to enable NETGEAR ReadyNAS support */
 /* #undef READYNAS */
 
+/* Manufacturer */
+#define ROOTDEV_MANUFACTURER "Justin Maggard"
+
+/* Manufacturer URL */
+#define ROOTDEV_MANUFACTURERURL "http://www.netgear.com/"
+
+/* Model description */
+#define ROOTDEV_MODELDESCRIPTION "MiniDLNA on " OS_NAME
+
+/* Model name */
+#define ROOTDEV_MODELNAME "Windows Media Connect compatible (MiniDLNA)"
+
+/* Model URL */
+#define ROOTDEV_MODELURL OS_URL
+
 /* scandir needs const char cast */
-#define SCANDIR_CONST 1
+/* #undef SCANDIR_CONST */
 
 /* we are on solaris */
 /* #undef SOLARIS */
@@ -441,9 +435,6 @@
 
 /* Define to 1 if you want to enable TiVo support */
 #define TIVO_SUPPORT 1
-
-/* use the system's builtin daemon() */
-/* #undef USE_DAEMON */
 
 /* Define to enable IPF */
 /* #undef USE_IPF */
@@ -471,7 +462,7 @@
 
 
 /* Version number of package */
-#define VERSION "1.1.4"
+#define VERSION "1.1.3"
 
 /* Define WORDS_BIGENDIAN to 1 if your processor stores words with the most
    significant byte first (like Motorola and SPARC, unlike Intel). */

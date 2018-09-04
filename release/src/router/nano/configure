@@ -669,8 +669,6 @@ MSGFMT
 GETTEXT_MACRO_VERSION
 USE_NLS
 SED
-PKG_CONFIG_LIBDIR
-PKG_CONFIG_PATH
 PKG_CONFIG
 LN_S
 LIBGNU_LTLIBDEPS
@@ -1828,6 +1826,7 @@ infodir
 docdir
 oldincludedir
 includedir
+runstatedir
 localstatedir
 sharedstatedir
 sysconfdir
@@ -1896,8 +1895,6 @@ LIBS
 CPPFLAGS
 CPP
 PKG_CONFIG
-PKG_CONFIG_PATH
-PKG_CONFIG_LIBDIR
 NCURSESW_CFLAGS
 NCURSESW_LIBS
 NCURSES_CFLAGS
@@ -1940,6 +1937,7 @@ datadir='${datarootdir}'
 sysconfdir='${prefix}/etc'
 sharedstatedir='${prefix}/com'
 localstatedir='${prefix}/var'
+runstatedir='${localstatedir}/run'
 includedir='${prefix}/include'
 oldincludedir='/usr/include'
 docdir='${datarootdir}/doc/${PACKAGE_TARNAME}'
@@ -2192,6 +2190,15 @@ do
   | -silent | --silent | --silen | --sile | --sil)
     silent=yes ;;
 
+  -runstatedir | --runstatedir | --runstatedi | --runstated \
+  | --runstate | --runstat | --runsta | --runst | --runs \
+  | --run | --ru | --r)
+    ac_prev=runstatedir ;;
+  -runstatedir=* | --runstatedir=* | --runstatedi=* | --runstated=* \
+  | --runstate=* | --runstat=* | --runsta=* | --runst=* | --runs=* \
+  | --run=* | --ru=* | --r=*)
+    runstatedir=$ac_optarg ;;
+
   -sbindir | --sbindir | --sbindi | --sbind | --sbin | --sbi | --sb)
     ac_prev=sbindir ;;
   -sbindir=* | --sbindir=* | --sbindi=* | --sbind=* | --sbin=* \
@@ -2329,7 +2336,7 @@ fi
 for ac_var in	exec_prefix prefix bindir sbindir libexecdir datarootdir \
 		datadir sysconfdir sharedstatedir localstatedir includedir \
 		oldincludedir docdir infodir htmldir dvidir pdfdir psdir \
-		libdir localedir mandir
+		libdir localedir mandir runstatedir
 do
   eval ac_val=\$$ac_var
   # Remove trailing slashes.
@@ -2482,6 +2489,7 @@ Fine tuning of the installation directories:
   --sysconfdir=DIR        read-only single-machine data [PREFIX/etc]
   --sharedstatedir=DIR    modifiable architecture-independent data [PREFIX/com]
   --localstatedir=DIR     modifiable single-machine data [PREFIX/var]
+  --runstatedir=DIR       modifiable per-process data [LOCALSTATEDIR/run]
   --libdir=DIR            object code libraries [EPREFIX/lib]
   --includedir=DIR        C header files [PREFIX/include]
   --oldincludedir=DIR     C header files for non-gcc [/usr/include]
@@ -2583,10 +2591,6 @@ Some influential environment variables:
               you have headers in a nonstandard directory <include dir>
   CPP         C preprocessor
   PKG_CONFIG  path to pkg-config utility
-  PKG_CONFIG_PATH
-              directories to add to pkg-config's search path
-  PKG_CONFIG_LIBDIR
-              path overriding pkg-config's built-in search path
   NCURSESW_CFLAGS
               C compiler flags for NCURSESW, overriding pkg-config
   NCURSESW_LIBS
@@ -31873,11 +31877,6 @@ fi
 
 
 
-
-
-
-
-
 if test "x$ac_cv_env_PKG_CONFIG_set" != "xset"; then
 	if test -n "$ac_tool_prefix"; then
   # Extract the first word of "${ac_tool_prefix}pkg-config", so it can be a program name with args.
@@ -31990,6 +31989,7 @@ $as_echo "yes" >&6; }
 $as_echo "no" >&6; }
 		PKG_CONFIG=""
 	fi
+
 fi
 
 
@@ -34801,49 +34801,49 @@ if eval "test x$CURSES_LIB_NAME = x"; then
 	if test "x$enable_utf8" != xno; then
 
 pkg_failed=no
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for ncursesw" >&5
-$as_echo_n "checking for ncursesw... " >&6; }
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for NCURSESW" >&5
+$as_echo_n "checking for NCURSESW... " >&6; }
 
-if test -n "$NCURSESW_CFLAGS"; then
-    pkg_cv_NCURSESW_CFLAGS="$NCURSESW_CFLAGS"
- elif test -n "$PKG_CONFIG"; then
-    if test -n "$PKG_CONFIG" && \
+if test -n "$PKG_CONFIG"; then
+    if test -n "$NCURSESW_CFLAGS"; then
+        pkg_cv_NCURSESW_CFLAGS="$NCURSESW_CFLAGS"
+    else
+        if test -n "$PKG_CONFIG" && \
     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"ncursesw\""; } >&5
   ($PKG_CONFIG --exists --print-errors "ncursesw") 2>&5
   ac_status=$?
   $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
   test $ac_status = 0; }; then
   pkg_cv_NCURSESW_CFLAGS=`$PKG_CONFIG --cflags "ncursesw" 2>/dev/null`
-		      test "x$?" != "x0" && pkg_failed=yes
 else
   pkg_failed=yes
 fi
- else
-    pkg_failed=untried
+    fi
+else
+	pkg_failed=untried
 fi
-if test -n "$NCURSESW_LIBS"; then
-    pkg_cv_NCURSESW_LIBS="$NCURSESW_LIBS"
- elif test -n "$PKG_CONFIG"; then
-    if test -n "$PKG_CONFIG" && \
+if test -n "$PKG_CONFIG"; then
+    if test -n "$NCURSESW_LIBS"; then
+        pkg_cv_NCURSESW_LIBS="$NCURSESW_LIBS"
+    else
+        if test -n "$PKG_CONFIG" && \
     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"ncursesw\""; } >&5
   ($PKG_CONFIG --exists --print-errors "ncursesw") 2>&5
   ac_status=$?
   $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
   test $ac_status = 0; }; then
   pkg_cv_NCURSESW_LIBS=`$PKG_CONFIG --libs "ncursesw" 2>/dev/null`
-		      test "x$?" != "x0" && pkg_failed=yes
 else
   pkg_failed=yes
 fi
- else
-    pkg_failed=untried
+    fi
+else
+	pkg_failed=untried
 fi
 
 
 
 if test $pkg_failed = yes; then
-        { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
 
 if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
         _pkg_short_errors_supported=yes
@@ -34851,17 +34851,17 @@ else
         _pkg_short_errors_supported=no
 fi
         if test $_pkg_short_errors_supported = yes; then
-	        NCURSESW_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors --cflags --libs "ncursesw" 2>&1`
+	        NCURSESW_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "ncursesw"`
         else
-	        NCURSESW_PKG_ERRORS=`$PKG_CONFIG --print-errors --cflags --libs "ncursesw" 2>&1`
+	        NCURSESW_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "ncursesw"`
         fi
 	# Put the nasty error message in config.log where it belongs
 	echo "$NCURSESW_PKG_ERRORS" >&5
 
-	:
-elif test $pkg_failed = untried; then
-        { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
+                :
+elif test $pkg_failed = untried; then
 	:
 else
 	NCURSESW_CFLAGS=$pkg_cv_NCURSESW_CFLAGS
@@ -34878,49 +34878,49 @@ fi
 	else
 
 pkg_failed=no
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for ncurses" >&5
-$as_echo_n "checking for ncurses... " >&6; }
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for NCURSES" >&5
+$as_echo_n "checking for NCURSES... " >&6; }
 
-if test -n "$NCURSES_CFLAGS"; then
-    pkg_cv_NCURSES_CFLAGS="$NCURSES_CFLAGS"
- elif test -n "$PKG_CONFIG"; then
-    if test -n "$PKG_CONFIG" && \
+if test -n "$PKG_CONFIG"; then
+    if test -n "$NCURSES_CFLAGS"; then
+        pkg_cv_NCURSES_CFLAGS="$NCURSES_CFLAGS"
+    else
+        if test -n "$PKG_CONFIG" && \
     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"ncurses\""; } >&5
   ($PKG_CONFIG --exists --print-errors "ncurses") 2>&5
   ac_status=$?
   $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
   test $ac_status = 0; }; then
   pkg_cv_NCURSES_CFLAGS=`$PKG_CONFIG --cflags "ncurses" 2>/dev/null`
-		      test "x$?" != "x0" && pkg_failed=yes
 else
   pkg_failed=yes
 fi
- else
-    pkg_failed=untried
+    fi
+else
+	pkg_failed=untried
 fi
-if test -n "$NCURSES_LIBS"; then
-    pkg_cv_NCURSES_LIBS="$NCURSES_LIBS"
- elif test -n "$PKG_CONFIG"; then
-    if test -n "$PKG_CONFIG" && \
+if test -n "$PKG_CONFIG"; then
+    if test -n "$NCURSES_LIBS"; then
+        pkg_cv_NCURSES_LIBS="$NCURSES_LIBS"
+    else
+        if test -n "$PKG_CONFIG" && \
     { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"ncurses\""; } >&5
   ($PKG_CONFIG --exists --print-errors "ncurses") 2>&5
   ac_status=$?
   $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
   test $ac_status = 0; }; then
   pkg_cv_NCURSES_LIBS=`$PKG_CONFIG --libs "ncurses" 2>/dev/null`
-		      test "x$?" != "x0" && pkg_failed=yes
 else
   pkg_failed=yes
 fi
- else
-    pkg_failed=untried
+    fi
+else
+	pkg_failed=untried
 fi
 
 
 
 if test $pkg_failed = yes; then
-        { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
 
 if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
         _pkg_short_errors_supported=yes
@@ -34928,17 +34928,17 @@ else
         _pkg_short_errors_supported=no
 fi
         if test $_pkg_short_errors_supported = yes; then
-	        NCURSES_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors --cflags --libs "ncurses" 2>&1`
+	        NCURSES_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "ncurses"`
         else
-	        NCURSES_PKG_ERRORS=`$PKG_CONFIG --print-errors --cflags --libs "ncurses" 2>&1`
+	        NCURSES_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "ncurses"`
         fi
 	# Put the nasty error message in config.log where it belongs
 	echo "$NCURSES_PKG_ERRORS" >&5
 
-	:
-elif test $pkg_failed = untried; then
-        { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
+                :
+elif test $pkg_failed = untried; then
 	:
 else
 	NCURSES_CFLAGS=$pkg_cv_NCURSES_CFLAGS
